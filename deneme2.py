@@ -27,6 +27,12 @@ dfc=pd.DataFrame(markets)
 dfc2=dfc.T
 dfc3=dfc2["info"].apply(pd.Series)
 
+dfc4=dfc3[["name","status","assetType","country","marketType","quoteAssetId"]]
+dfc4.reset_index(inplace=True)
+
+dfc5=dfc4[(dfc4.marketType == 'SPOT')& (dfc4.assetType!='UTILITY_TOKENS')&(dfc4.quoteAssetId!='USDT')&((dfc4.status=='TRADING')\
+         |(dfc4.status=='BREAK'))]
+
 jpn=pd.read_html('https://tradingeconomics.com/japan/stock-market')[0].iloc[:,0].to_list()
 
 jpn1=[]
@@ -36,14 +42,9 @@ for i in jpn:
 japanlist=dfc5[dfc5['index'].isin(jpn1)]
 americalist=dfc5[dfc5['index'].isin(sp500mod)]
 europelist=dfc5[dfc5['index'].isin(euro3)]
-
-currency=dfc4[(dfc4.marketType == 'SPOT')& (dfc4.assetType!='UTILITY_TOKENS')&(dfc4.quoteAssetId!='USDT')&(dfc4.assetType == 'CURRENCY')]
 major_curr=['EUR/USD','USD/JPY','GBP/USD','USD/CHF','AUD/USD','USD/CAD','NZD/USD']
-
-currencylist=currency[currency['index'].isin(major_curr)]
-
-crypto=dfc4[(dfc4.marketType == 'SPOT')& (dfc4.assetType!='UTILITY_TOKENS')&(dfc4.quoteAssetId!='USDT')&(dfc4.assetType == 'CRYPTOCURRENCY')]
-cryptolist=crypto[crypto['index'].isin(['ETH/USD', 'BTC/USD'])]
+currencylist=dfc5[dfc5['index'].isin(major_curr)]
+cryptolist=dfc5[dfc5['index'].isin(['ETH/USD', 'BTC/USD'])]
 
 indices=dfc4[(dfc4.marketType == 'SPOT')& (dfc4.assetType!='UTILITY_TOKENS')&(dfc4.quoteAssetId!='USDT')&(dfc4.assetType == 'INDEX')]
 
