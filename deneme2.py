@@ -55,7 +55,6 @@ commodities=commodities1[commodities1['name'].str.contains('Futures')==False]
 dfc6=pd.concat([americalist, europelist,currencylist,japanlist,cryptolist,indices,commodities], axis=0)
 dfc6['fullname'] = dfc6.iloc[:,0]+'_'+dfc6.iloc[:,1]+'_'+dfc6.iloc[:,2]+'_'+dfc6.iloc[:,3]
 dfc6.iloc[:, [0,6]].to_csv('csymbols.csv',header=False, index=False)
-st.write(dfc6)
 st.set_page_config(layout="wide")
 st.title('Screener')
 start = time.perf_counter()
