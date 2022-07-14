@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import ccxt
 import sqlalchemy
+import time
 
 
 exchange=ccxt.currencycom()
